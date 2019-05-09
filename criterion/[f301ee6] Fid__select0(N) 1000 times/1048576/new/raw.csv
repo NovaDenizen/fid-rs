@@ -1,0 +1,11 @@
+group,function,value,sample_time_nanos,iteration_count
+[f301ee6] Fid::select0(N) 1000 times,,1048576,29342998.0,19
+[f301ee6] Fid::select0(N) 1000 times,,1048576,60697114.0,38
+[f301ee6] Fid::select0(N) 1000 times,,1048576,91217170.0,57
+[f301ee6] Fid::select0(N) 1000 times,,1048576,121860108.0,76
+[f301ee6] Fid::select0(N) 1000 times,,1048576,152534236.0,95
+[f301ee6] Fid::select0(N) 1000 times,,1048576,185122500.0,114
+[f301ee6] Fid::select0(N) 1000 times,,1048576,214930116.0,133
+[f301ee6] Fid::select0(N) 1000 times,,1048576,246852814.0,152
+[f301ee6] Fid::select0(N) 1000 times,,1048576,272372040.0,171
+[f301ee6] Fid::select0(N) 1000 times,,1048576,301919488.0,190

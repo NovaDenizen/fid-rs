@@ -1,0 +1,11 @@
+group,function,value,sample_time_nanos,iteration_count
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,80522070.0,59
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,158288416.0,118
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,236818252.0,177
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,315107134.0,236
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,400078217.0,295
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,480138633.0,354
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,559901100.0,413
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,639080705.0,472
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,722091805.0,531
+"[f301ee6] Fid::from(""00...(repeated N-times)"")",,262144,801372826.0,590

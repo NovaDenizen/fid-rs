@@ -1,0 +1,11 @@
+group,function,value,sample_time_nanos,iteration_count
+[f301ee6] Fid::rank(N) 1000000 times,,524288,123736524.0,2
+[f301ee6] Fid::rank(N) 1000000 times,,524288,248274465.0,4
+[f301ee6] Fid::rank(N) 1000000 times,,524288,371775441.0,6
+[f301ee6] Fid::rank(N) 1000000 times,,524288,496113558.0,8
+[f301ee6] Fid::rank(N) 1000000 times,,524288,621017743.0,10
+[f301ee6] Fid::rank(N) 1000000 times,,524288,741834042.0,12
+[f301ee6] Fid::rank(N) 1000000 times,,524288,865621624.0,14
+[f301ee6] Fid::rank(N) 1000000 times,,524288,988588128.0,16
+[f301ee6] Fid::rank(N) 1000000 times,,524288,1115443335.0,18
+[f301ee6] Fid::rank(N) 1000000 times,,524288,1237348358.0,20

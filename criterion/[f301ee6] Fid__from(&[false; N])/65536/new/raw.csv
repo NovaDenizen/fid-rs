@@ -1,0 +1,11 @@
+group,function,value,sample_time_nanos,iteration_count
+[f301ee6] Fid::from(&[false; N]),,65536,73834061.0,315
+[f301ee6] Fid::from(&[false; N]),,65536,150022225.0,630
+[f301ee6] Fid::from(&[false; N]),,65536,239516043.0,945
+[f301ee6] Fid::from(&[false; N]),,65536,325738882.0,1260
+[f301ee6] Fid::from(&[false; N]),,65536,407716292.0,1575
+[f301ee6] Fid::from(&[false; N]),,65536,495201160.0,1890
+[f301ee6] Fid::from(&[false; N]),,65536,577493988.0,2205
+[f301ee6] Fid::from(&[false; N]),,65536,659499177.0,2520
+[f301ee6] Fid::from(&[false; N]),,65536,741130941.0,2835
+[f301ee6] Fid::from(&[false; N]),,65536,829604565.0,3150
