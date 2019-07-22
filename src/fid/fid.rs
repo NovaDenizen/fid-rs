@@ -26,7 +26,7 @@ impl From<&str> for Fid {
     /// - `s` contains any character other than '0', '1', and '_'.
     /// - `s` does not contain any '0' or '1'
     fn from(s: &str) -> Self {
-        let bits: Vec<bool> = s
+        s
             .as_bytes()
             .iter()
             .filter_map(|c| match c {
@@ -35,8 +35,7 @@ impl From<&str> for Fid {
                 95 /* '_' */ => None,
                 _ => panic!("`s` must consist of '0' or '1'. '{}' included.", c),
             })
-            .collect();
-        Self::from(&bits[..])
+            .collect()
     }
 }
 
@@ -59,21 +58,40 @@ impl From<&[bool]> for Fid {
     /// When:
     /// - `bits` is empty.
     fn from(bits: &[bool]) -> Self {
-        assert!(!bits.is_empty());
+        bits.iter().cloned().collect()
+    }
+}
 
-        let mut byte_vec: Vec<u8> = Vec::with_capacity(bits.len() / 8 + 1);
-        let mut last_byte_len = 0u8;
-
-        for bits8 in bits.chunks(8) {
-            last_byte_len = bits8.len() as u8; // although this bits8 might not be a last byte.
-
-            let byte = (0..last_byte_len).fold(0, |byte, i| {
-                byte + if bits8[i as usize] { 1 << (7 - i) } else { 0 }
-            });
-            byte_vec.push(byte);
+impl std::iter::FromIterator<bool> for Fid
+{
+    fn from_iter<T>(t: T) -> Self
+    where
+        T: IntoIterator<Item = bool>,
+    {
+        let iter = t.into_iter();
+        let expected_bits = 
+            match iter.size_hint() {
+                (_, Some(max)) => max,
+                (min, None) => min,
+            };
+        let mut byte_vec = Vec::with_capacity((expected_bits + 7)/8);
+        let mut this_byte: u8 = 0;
+        let mut bit_phase: usize = 0;
+        for b in iter {
+            if b {
+                this_byte |= 1 << (7 - bit_phase)
+            }
+            bit_phase += 1;
+            if bit_phase == 8 {
+                byte_vec.push(this_byte);
+                this_byte = 0;
+                bit_phase = 0;
+            }
         }
-
-        Fid::build(byte_vec, last_byte_len)
+        if bit_phase != 0 {
+            byte_vec.push(this_byte);
+        }
+        Fid::build(byte_vec, bit_phase as u8)
     }
 }
 
