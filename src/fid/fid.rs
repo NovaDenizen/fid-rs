@@ -91,7 +91,13 @@ impl std::iter::FromIterator<bool> for Fid
         if bit_phase != 0 {
             byte_vec.push(this_byte);
         }
-        Fid::build(byte_vec, bit_phase as u8)
+        let last_byte_len = 
+            if bit_phase == 0 {
+                8
+            } else {
+                bit_phase as u8
+            };
+        Fid::build(byte_vec, last_byte_len)
     }
 }
 
