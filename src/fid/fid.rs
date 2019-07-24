@@ -26,7 +26,8 @@ impl From<&str> for Fid {
     /// - `s` contains any character other than '0', '1', and '_'.
     /// - `s` does not contain any '0' or '1'
     fn from(s: &str) -> Self {
-        s
+        // TODO: change to .collect() when FromIterator is in API.
+        let s2 = s
             .as_bytes()
             .iter()
             .filter_map(|c| match c {
@@ -34,8 +35,8 @@ impl From<&str> for Fid {
                 49 /* '1' */ => Some(true),
                 95 /* '_' */ => None,
                 _ => panic!("`s` must consist of '0' or '1'. '{}' included.", c),
-            })
-            .collect()
+            });
+        Fid::from_iter(s2)
     }
 }
 
@@ -58,48 +59,22 @@ impl From<&[bool]> for Fid {
     /// When:
     /// - `bits` is empty.
     fn from(bits: &[bool]) -> Self {
-        bits.iter().cloned().collect()
+        //TODO: Change to .collect() when FromIterator is added to API.
+        Fid::from_iter(bits.iter().cloned())
     }
 }
 
+/* need to preserve api hash for criterion comparison
 impl std::iter::FromIterator<bool> for Fid
 {
     fn from_iter<T>(t: T) -> Self
     where
         T: IntoIterator<Item = bool>,
     {
-        let iter = t.into_iter();
-        let expected_bits = 
-            match iter.size_hint() {
-                (_, Some(max)) => max,
-                (min, None) => min,
-            };
-        let mut byte_vec = Vec::with_capacity((expected_bits + 7)/8);
-        let mut this_byte: u8 = 0;
-        let mut bit_phase: usize = 0;
-        for b in iter {
-            if b {
-                this_byte |= 1 << (7 - bit_phase)
-            }
-            bit_phase += 1;
-            if bit_phase == 8 {
-                byte_vec.push(this_byte);
-                this_byte = 0;
-                bit_phase = 0;
-            }
-        }
-        if bit_phase != 0 {
-            byte_vec.push(this_byte);
-        }
-        let last_byte_len = 
-            if bit_phase == 0 {
-                8
-            } else {
-                bit_phase as u8
-            };
-        Fid::build(byte_vec, last_byte_len)
+        Fid::from_iter(t)
     }
 }
+*/
 
 static TRUE: bool = true;
 static FALSE: bool = false;
@@ -297,6 +272,41 @@ impl Fid {
                 last_byte_len_or_0
             },
         )
+    }
+    fn from_iter<T>(t: T) -> Self
+    where
+        T: IntoIterator<Item = bool>,
+    {
+        let iter = t.into_iter();
+        let expected_bits = 
+            match iter.size_hint() {
+                (_, Some(max)) => max,
+                (min, None) => min,
+            };
+        let mut byte_vec = Vec::with_capacity((expected_bits + 7)/8);
+        let mut this_byte: u8 = 0;
+        let mut bit_phase: usize = 0;
+        for b in iter {
+            if b {
+                this_byte |= 1 << (7 - bit_phase)
+            }
+            bit_phase += 1;
+            if bit_phase == 8 {
+                byte_vec.push(this_byte);
+                this_byte = 0;
+                bit_phase = 0;
+            }
+        }
+        if bit_phase != 0 {
+            byte_vec.push(this_byte);
+        }
+        let last_byte_len = 
+            if bit_phase == 0 {
+                8
+            } else {
+                bit_phase as u8
+            };
+        Fid::build(byte_vec, last_byte_len)
     }
 }
 
